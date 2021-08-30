@@ -43,11 +43,11 @@ class ShareCode
     private static function base_encode($int, $hash)
     {
         $toValue = '';
-        $shang = $int;
-        $len = strlen($hash);
+        $hash_len = strlen($hash);
+        $shang = $int + pow($hash_len, 2);
         do {
-            $yushu = $shang % $len;
-            $shang = floor($shang / $len);
+            $yushu = $shang % $hash_len;
+            $shang = floor($shang / $hash_len);
             $toValue = $hash{$yushu} . $toValue;
         } while ($shang > 0);
         return $toValue;
@@ -57,11 +57,11 @@ class ShareCode
     {
         $str = 0;
         $len = strlen($base30);
-        $base_string_len = strlen($hash);
+        $hash_len = strlen($hash);
         for ($i = 0; $i < $len; $i++) {
-            $str += strpos($hash, $base30{($len - $i - 1)}) * pow($base_string_len, $i);
+            $str += strpos($hash, $base30{($len - $i - 1)}) * pow($hash_len, $i);
         }
-        return $str;
+        return $str - pow($hash_len, 2);
     }
 
     /***
@@ -71,7 +71,7 @@ class ShareCode
      * @param bool $is_fixed 是否固定
      * @return string
      */
-    public function encode($user_id, &$error = '', $is_fixed = false)
+    public function encode($user_id, &$error = '', $is_fixed = true)
     {
         if (!is_numeric($user_id) || $user_id < 0) {
             $error = '`user_id` must be a numeric and bigger than zero';
