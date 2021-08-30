@@ -129,4 +129,35 @@ class ShareCode
         }
         return self::$instance;
     }
+
+    public static function setFactorLen($len)
+    {
+        return self::$factor_len = (int)$len;
+    }
+
+    /**
+     * @return int
+     */
+    public static function getFactorLen()
+    {
+        return self::$factor_len;
+    }
+
+    /**
+     * @param $user_id
+     * @return string
+     */
+    public static function getEncode($user_id)
+    {
+        return self::getInstance()->encode($user_id);
+    }
+
+    /**
+     * @param $code
+     * @return int
+     */
+    public static function getDecode($code)
+    {
+        return self::getInstance()->decode($code);
+    }
 }
