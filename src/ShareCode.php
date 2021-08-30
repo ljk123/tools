@@ -68,10 +68,10 @@ class ShareCode
      * 加码
      * @param int $user_id
      * @param string $error
-     * @param bool $is_fixed 是否固定
+     * @param bool $is_fixed 是否固定因子
      * @return string
      */
-    public function encode($user_id, &$error = '', $is_fixed = true)
+    public function encode($user_id, &$error = '', $is_fixed = false)
     {
         if (!is_numeric($user_id) || $user_id < 0) {
             $error = '`user_id` must be a numeric and bigger than zero';
@@ -130,12 +130,18 @@ class ShareCode
         return self::$instance;
     }
 
+    /**
+     * 设置因子长度
+     * @param $len
+     * @return int
+     */
     public static function setFactorLen($len)
     {
         return self::$factor_len = (int)$len;
     }
 
     /**
+     * 获取因子长度
      * @return int
      */
     public static function getFactorLen()
@@ -144,15 +150,19 @@ class ShareCode
     }
 
     /**
+     * 静态加码
      * @param $user_id
+     * @param string $error
+     * @param bool $is_fixed 是否固定因子
      * @return string
      */
-    public static function getEncode($user_id)
+    public static function getEncode($user_id, &$error = '', $is_fixed = false)
     {
-        return self::getInstance()->encode($user_id);
+        return self::getInstance()->encode($user_id, $error, $is_fixed);
     }
 
     /**
+     * 静态解码
      * @param $code
      * @return int
      */
