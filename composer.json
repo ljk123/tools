@@ -1,5 +1,10 @@
 {
   "name": "ljk/tools",
+  "description": "常用算法",
+  "keywords": [
+    "邀请码",
+    "curl"
+  ],
   "type": "library",
   "license": "MIT",
   "authors": [
