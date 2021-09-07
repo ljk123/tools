@@ -79,7 +79,9 @@ class ShareCode
         }
         $factor = '';
         if ($is_fixed) {
-            $factor = self::$base_string{$user_id % strlen(self::$base_string)};
+            for ($i = 0; $i < self::$factor_len; $i++) {
+                $factor .= self::$base_string{pow($user_id + 10, $i) % strlen(self::$base_string)};
+            }
         }
         list($hash, $factor) = self::hash($factor);
         $toValue = self::base_encode($user_id, $hash);
