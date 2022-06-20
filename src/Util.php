@@ -48,7 +48,7 @@ class Util
         }
     }
 
-    public static function http_post($url, $params, $headers)
+    public static function http_post($url, $params, $headers, $timeout = 3)
     {
         $curl = curl_init(); // 启动一个CURL会话
         curl_setopt($curl, CURLOPT_URL, $url);
@@ -60,6 +60,7 @@ class Util
 
         curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, false); // 跳过证书检查
         curl_setopt($curl, CURLOPT_SSL_VERIFYHOST, true);  // 从证书中检查SSL加密算法是否存在
+        curl_setopt($curl, CURLOPT_TIMEOUT, $timeout);
         $result = curl_exec($curl);
 
         $aStatus = curl_getinfo($curl);
